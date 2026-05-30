@@ -10,7 +10,7 @@ st.set_page_config(page_title="Sistema di Consulenza Investimenti", layout="wide
 def check_password():
     """Ritorna `True` se la password è corretta."""
     def password_entered():
-        if st.session_state["password"] == st.secrets.get("password", "quantadmin123"):
+        if st.session_state["password"] == st.secrets.get("password", "Milano26"):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # Rimuove la password dalla memoria
         else:
