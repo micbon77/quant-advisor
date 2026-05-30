@@ -7,8 +7,33 @@ from backtester import run_backtest
 
 st.set_page_config(page_title="Sistema di Consulenza Investimenti", layout="wide")
 
+def check_password():
+    """Ritorna `True` se la password è corretta."""
+    def password_entered():
+        if st.session_state["password"] == st.secrets.get("password", "quantadmin123"):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Rimuove la password dalla memoria
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        st.text_input("Inserisci la password per accedere alla Dashboard:", type="password", on_change=password_entered, key="password")
+        return False
+    elif not st.session_state["password_correct"]:
+        st.text_input("Inserisci la password per accedere alla Dashboard:", type="password", on_change=password_entered, key="password")
+        st.error("Password errata 😕")
+        return False
+    else:
+        return True
+
+if not check_password():
+    st.stop()
+
+
 st.title("Sistema Automatizzato di Consulenza per Investimenti e Backtesting")
 st.markdown("Strategia Absolute Momentum e Segui-Tendenza")
+
+st.info("**Disclaimer Legale:** Questa applicazione ha scopo puramente educativo e di ricerca personale. Non costituisce in alcun modo consulenza finanziaria e i risultati passati dei backtest non sono garanzia di rendimenti futuri.")
 
 # --- Sidebar Inputs ---
 st.sidebar.header("Asset da Analizzare")
